@@ -1,7 +1,5 @@
 package hexlet.code.app.model;
 
-
-
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
