@@ -13,7 +13,7 @@ plugins {
 group = "hexlet.code"
 version = "0.0.1-SNAPSHOT"
 
-application { mainClass.set("hexlet.code.AppApplication") }
+application { mainClass.set("hexlet.code.app.AppApplication") }
 
 java {
 	toolchain {
