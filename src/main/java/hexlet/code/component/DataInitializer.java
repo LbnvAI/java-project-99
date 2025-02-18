@@ -2,10 +2,8 @@ package hexlet.code.component;
 
 import hexlet.code.Repository.UserRepository;
 import hexlet.code.dto.user.UserCreateDTO;
-import hexlet.code.model.User;
 import hexlet.code.service.UserService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -13,16 +11,11 @@ import org.springframework.stereotype.Component;
 
 @Component
 @AllArgsConstructor
-public class DataInitializer implements ApplicationRunner {
+public final class DataInitializer implements ApplicationRunner {
 
-    @Autowired
-    UserRepository userRepository;
-
-    @Autowired
-    UserService userService;
-
-    @Autowired
-    PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
+    private final UserService userService;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public void run(ApplicationArguments args) {

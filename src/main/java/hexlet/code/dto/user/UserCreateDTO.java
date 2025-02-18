@@ -9,7 +9,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UserCreateDTO {
+public final class UserCreateDTO {
     @NotNull
     @Email
     private String email;

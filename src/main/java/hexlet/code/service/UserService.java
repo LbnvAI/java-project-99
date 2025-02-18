@@ -7,7 +7,6 @@ import hexlet.code.dto.user.UserUpdateDTO;
 import hexlet.code.mapper.UserMapper;
 import hexlet.code.model.User;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.provisioning.UserDetailsManager;
@@ -17,12 +16,10 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class UserService implements UserDetailsManager {
+public final class UserService implements UserDetailsManager {
 
-    @Autowired
-    UserMapper userMapper;
-    @Autowired
-    UserRepository userRepository;
+    private UserMapper userMapper;
+    private UserRepository userRepository;
 
     public UserShowDTO create(UserCreateDTO userCreateDTO) {
         User user = userMapper.map(userCreateDTO);
@@ -77,8 +74,6 @@ public class UserService implements UserDetailsManager {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByEmail(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-        //throw new UnsupportedOperationException("Unimplemented method 'loadUserByUsername'");
+        return userRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 }

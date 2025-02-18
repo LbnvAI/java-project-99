@@ -1,3 +1,5 @@
 package hexlet.code.model;
 
-public interface BaseEntity {}
+public interface BaseEntity {
+}
+
