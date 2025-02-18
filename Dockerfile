@@ -8,4 +8,4 @@ RUN gradle installDist
 
 EXPOSE 8080
 
-CMD ./build/install/app/bin --spring.profiles.active=production
+CMD ./build/install/bin --spring.profiles.active=production
