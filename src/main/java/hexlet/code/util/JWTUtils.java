@@ -9,12 +9,27 @@ import org.springframework.stereotype.Component;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 
+/**
+ * Utility class for JWT token generation operations.
+ * Handles creation of signed JWT tokens with configurable expiration.
+ */
 @Component
 public class JWTUtils {
 
+    /**
+     * Spring Security JWT encoder for signing tokens.
+     */
     @Autowired
     private JwtEncoder encoder;
 
+    /**
+     * Generates a JWT token for the given username.
+     * The token includes issuer, issued-at time, expiration time, and subject claims.
+     * Token expires after 1 hour from creation.
+     *
+     * @param username the subject to include in the token
+     * @return generated JWT token string
+     */
     public String generateToken(String username) {
         Instant now = Instant.now();
         JwtClaimsSet claims = JwtClaimsSet.builder()

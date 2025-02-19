@@ -20,31 +20,63 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * REST controller for managing user operations.
+ * Handles CRUD operations for users with proper security constraints.
+ */
 @RestController
 @RequestMapping("/api/users")
 @AllArgsConstructor
 public class UserController {
 
+    /**
+     * Service layer for user operations.
+     */
     private UserService userService;
 
+    /**
+     * Retrieves all users from the system.
+     *
+     * @return list of user DTOs
+     */
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<UserShowDTO> getAllUsers() {
         return userService.getAll();
     }
 
+    /**
+     * Retrieves a user by ID.
+     *
+     * @param id the user ID to retrieve
+     * @return user DTO
+     */
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public UserShowDTO get(@PathVariable long id) {
         return userService.get(id);
     }
 
+    /**
+     * Creates a new user.
+     *
+     * @param userCreateDTO user creation data
+     * @return created user DTO
+     */
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public UserShowDTO create(@Valid @RequestBody UserCreateDTO userCreateDTO) {
         return userService.create(userCreateDTO);
     }
 
+    /**
+     * Updates an existing user.
+     * Only the user themselves can update their own information.
+     *
+     * @param id user ID to update
+     * @param userUpdateDTO user update data
+     * @return updated user DTO
+     */
     @PutMapping("/{id}")
     @PreAuthorize(value = "@userUtils.getCurrentUser().getId() == #id")
     @ResponseStatus(HttpStatus.OK)
@@ -52,6 +84,12 @@ public class UserController {
         return userService.update(id, userUpdateDTO);
     }
 
+    /**
+     * Deletes a user.
+     * Only the user themselves can delete their own account.
+     *
+     * @param id user ID to delete
+     */
     @DeleteMapping("/id")
     @PreAuthorize(value = "@userUtils.getCurrentUser().getId() == #id")
     @ResponseStatus(HttpStatus.NO_CONTENT)

@@ -19,16 +19,41 @@ import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
+/**
+ * Security configuration class that enables web security and method-level security
+ * for the application. Configures authentication and authorization mechanisms
+ * including JWT-based authentication and HTTP Basic authentication.
+ */
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
 @AllArgsConstructor
 public class SecurityConfig {
 
+    /**
+     * JWT decoder for verifying token signatures.
+     */
     private final JwtDecoder jwtDecoder;
+
+    /**
+     * Password encoder for secure password hashing.
+     */
     private final PasswordEncoder passwordEncoder;
+
+    /**
+     * User service for managing user authentication and details.
+     */
     private final UserService userService;
 
+    /**
+     * Configures the security filter chain for the application.
+     * Defines security rules for different endpoints and authentication mechanisms.
+     *
+     * @param http the HttpSecurity configuration
+     * @param introspector the HandlerMappingIntrospector
+     * @return the configured SecurityFilterChain
+     * @throws Exception if configuration fails
+     */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, HandlerMappingIntrospector introspector)
             throws Exception {
@@ -44,12 +69,27 @@ public class SecurityConfig {
                 .build();
     }
 
+    /**
+     * Creates and returns the AuthenticationManager for handling authentication
+     * requests. This bean is required for method security to work properly.
+     *
+     * @param http the HttpSecurity configuration
+     * @return the configured AuthenticationManager
+     * @throws Exception if configuration fails
+     */
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
         return http.getSharedObject(AuthenticationManagerBuilder.class)
                 .build();
     }
 
+    /**
+     * Creates and configures the authentication provider that uses the user service
+     * and password encoder for authenticating users.
+     *
+     * @param auth the AuthenticationManagerBuilder
+     * @return the configured DaoAuthenticationProvider
+     */
     @Bean
     public AuthenticationProvider daoAuthProvider(AuthenticationManagerBuilder auth) {
         var provider = new DaoAuthenticationProvider();
