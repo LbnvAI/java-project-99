@@ -65,7 +65,7 @@ public abstract class UserMapper {
      * @param user the target User entity to update
      */
     @Mapping(source = "password", target = "passwordDigest")
-    public abstract void map(UserUpdateDTO userUpdateDTO, @MappingTarget User user);
+    public abstract void update(UserUpdateDTO userUpdateDTO, @MappingTarget User user);
 
     /**
      * Maps a User entity to a UserShowDTO for display purposes.

@@ -1,6 +1,6 @@
 package hexlet.code.service;
 
-import hexlet.code.Repository.UserRepository;
+import hexlet.code.repository.UserRepository;
 import hexlet.code.dto.user.UserCreateDTO;
 import hexlet.code.dto.user.UserShowDTO;
 import hexlet.code.dto.user.UserUpdateDTO;
@@ -39,7 +39,7 @@ public final class UserService implements UserDetailsManager {
     public UserShowDTO update(long id, UserUpdateDTO userUpdateDTO) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new UsernameNotFoundException("User with id = " + id + " not found"));
-        userMapper.map(userUpdateDTO, user);
+        userMapper.update(userUpdateDTO, user);
         return userMapper.map(userRepository.save(user));
     }
 

@@ -1,6 +1,6 @@
 package hexlet.code.util;
 
-import hexlet.code.Repository.UserRepository;
+import hexlet.code.repository.UserRepository;
 import hexlet.code.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
