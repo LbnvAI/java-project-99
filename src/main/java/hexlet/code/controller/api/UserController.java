@@ -7,6 +7,7 @@ import hexlet.code.service.UserService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,9 +41,11 @@ public class UserController {
      * @return list of user DTOs
      */
     @GetMapping
-    @ResponseStatus(HttpStatus.OK)
-    public List<UserShowDTO> getAllUsers() {
-        return userService.getAll();
+    public ResponseEntity<List<UserShowDTO>> getAll() {
+        List<UserShowDTO> result = userService.getAll();
+        return ResponseEntity.ok()
+                .header("X-Total-Count", String.valueOf(result.size()))
+                .body(result);
     }
 
     /**
