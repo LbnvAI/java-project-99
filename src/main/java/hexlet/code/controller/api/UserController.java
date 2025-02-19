@@ -7,6 +7,7 @@ import hexlet.code.service.UserService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,7 +23,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/users")
 @AllArgsConstructor
-public final class UserController {
+public class UserController {
 
     private UserService userService;
 
@@ -45,12 +46,14 @@ public final class UserController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize(value = "@userUtils.getCurrentUser().getId() == #id")
     @ResponseStatus(HttpStatus.OK)
     public UserShowDTO update(@PathVariable long id, @Valid @RequestBody UserUpdateDTO userUpdateDTO) {
         return userService.update(id, userUpdateDTO);
     }
 
     @DeleteMapping("/id")
+    @PreAuthorize(value = "@userUtils.getCurrentUser().getId() == #id")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable long id) {
         userService.delete(id);
