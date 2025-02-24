@@ -30,7 +30,7 @@ public final class DataInitializer implements ApplicationRunner {
         if (userRepository.findByEmail(email).isEmpty()) {
             UserCreateDTO userCreateDTO = new UserCreateDTO();
             userCreateDTO.setEmail(email);
-            userCreateDTO.setPassword(passwordEncoder.encode("qwerty"));
+            userCreateDTO.setPassword("qwerty");
             userService.create(userCreateDTO);
         }
 
